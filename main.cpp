@@ -6,7 +6,6 @@
 #include <cstring>
 #include <algorithm>
 #include <cctype>
-#include <ctype.h>
 
 using namespace std;
 
@@ -53,6 +52,15 @@ bool isLetter(const string& str) {
     }
     return true;
 }
+bool neGatives(const string& str) {
+    for (char c : str) {
+        if (c == '-') {
+            return false;  
+        }
+    }
+    return true;
+}
+
 
 
 //this function Below, for take order menu Nobugs
@@ -762,7 +770,6 @@ string productAvailableStock() {
                 goto howmanyproducts;
             }
             else if (isNumeric(howManyProducts)) {
-                long int QuantityStock[1000], totalStock[1000];
                 string nameProducts[100];
             
                 int howManyProductsInt = stoi(howManyProducts);
@@ -837,36 +844,54 @@ string productAvailableStock() {
                             
                             productFound = true;
                             backtoProductQuantity:
-                                
+                            string QuantityStockString[howManyProductsInt];
                             backto:
-                            cout << "\n\tHow many " << nameProducts[i] << " do you wanted to update their Stock : ";
+                            cout << "\n\tHow many " << productName << " do you wanted to update their Stock : ";
                             //HAVE A BUG THAT ALLOWS USER TO INPUT A STRING VALUE AND THEN TERMINATE THE PROGRAM
-                            cin >> QuantityStock[i];
+                            cin >> QuantityStockString[i];
+                            
+                            if (isLetter(QuantityStockString[i])) {
+                                cout << "\n\tInvalid Inputed!!" << endl;
+                                goto backto;
                                 
+                            } 
+                            Bug here
+                            else if (neGatives(QuantityStockString[i])) {
+                                cout << "\n\tInvalid Inputed!!" << endl;
+                                goto backto;
+                            }
+                            long int QuantityStock = stoi(QuantityStockString[i]);
+                            long int totalStock;
+                            
                             //test if the data retreining data is accurate 
                             //cout << productName << "," << priceProductInt << "," << totalStock[i];
-                                
-                            if (QuantityStock[i] > 10000000) {  
+                            
+                            
+                            if (QuantityStock > 10000000) {  
                                 //test if the data retreining data is accurate 
                                 //cout << productName << "," << priceProductInt << "," << stockInt;
                                 cout << "\n\tCannot Handle the Value!! \n" << endl;
                                 goto backto;
                             }
+                            else if (QuantityStock <= 0) {
+                                cout << "\n\tInvalid Inputed!!" << endl;
+                                goto backto;
+                            }
                             else {
                                 char pick1;
                                 
-                                cout << "\n\tDo you want to Add the " << QuantityStock[i] << " to the existing stock? Y/N: ";
+                                cout << "\n\tDo you want to Add the " << QuantityStock << " to the existing stock? Y/N: ";
                                 cin >> pick1;
                                     
                                 if (pick1 == 'y' || pick1 == 'Y') {
-                                    totalStock[i] = stockInt + QuantityStock[i];
+                                    totalStock = stockInt + QuantityStock;
                                     productAvailableStocks.close();
-                                    updateProductAvailableStock(upperCaseProductInput, totalStock[i]);
+                                    updateProductAvailableStock(upperCaseProductInput, totalStock);
                                     break;
                                 } 
                                 else if (pick1 == 'n' || pick1 == 'N') {
                                     productAvailableStocks.close();
-                                    updateProductAvailableStock(upperCaseProductInput, QuantityStock[i]);
+                                    updateProductAvailableStock(upperCaseProductInput, QuantityStock);
                                     break;
                                 }
                                 else {
