@@ -1,0 +1,6 @@
+Apple,12.000000,50
+PineApple,23.23,37
+Orange,10.22,80
+Grapes,40.23,100
+Dalandan,33.22,50
+Star Fruit,11.000000,30

@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1706706543 source:c:\users\acer\desktop\c++\food menu system\main.cpp
+	<iostream>
+	<string>
+	<fstream>
+	<thread>
+	<string.h>
+	<cstring>
+	<algorithm>
+	<cctype>
+	<ctype.h>
+
